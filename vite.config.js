@@ -9,7 +9,7 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: "src/index.html",
-        cart: "src/cart/cart.html",
+        cart: "src/cart/index.html",
         checkout: "src/checkout/index.html",
       },
     },
