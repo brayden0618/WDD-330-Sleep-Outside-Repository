@@ -1,23 +1,48 @@
-import { getLocalStorage } from "./utils.mjs";
+import { qs, getLocalStorage, renderListWithTemplate } from "./utils.mjs";
 
 const cartItems = getLocalStorage("so-cart");
-const cartList = document.querySelector(".product-list");
+const cartList = qs(".product-list");
+const cartTotal = qs(".cart-total");
 
-if (cartItems.length === 0) {
-  cartList.innerHTML = "<p>Your cart is empty.</p>";
-} else {
-  cartItems.forEach(item => renderCartItem(item));
-}
-
-function renderCartItem(item) {
-  const li = document.createElement("li");
-  li.classList.add("cart-card");
-
-  li.innerHTML = `
-    <img src="${item.Image}" alt="${item.Name}">
-    <h2>${item.Name}</h2>
-    <p>$${item.FinalPrice}</p>
+function cartItemTemplate(item) {
+  return `
+    <li class="cart-card divider">
+      <a href="#" class="cart-card__image">
+        <img src="${item.Image}" alt="${item.Name}" />
+      </a>
+      <a href="#">
+        <h2 class="card__name">${item.Name}</h2>
+      </a>
+      <p class="cart-card__color">${item.Colors[0].ColorName}</p>
+      <p class="cart-card__price">$${item.FinalPrice}</p>
+    </li>
   `;
-
-  cartList.appendChild(li);
 }
+
+function renderCartContents() {
+  if (!cartItems || cartItems.length === 0) {
+    cartList.innerHTML = "<p>Your cart is empty.</p>";
+    cartTotal.textContent = "$0.00";
+    return;
+  }
+
+  renderListWithTemplate(
+    cartItemTemplate,
+    cartList,
+    cartItems,
+    "afterbegin",
+    true
+  );
+
+  calculateCartTotal(cartItems);
+}
+
+function calculateCartTotal(items) {
+  const total = items.reduce(
+    (sum, item) => sum + item.FinalPrice,
+    0
+  );
+  cartTotal.textContent = `$${total.toFixed(2)}`;
+}
+
+renderCartContents();
