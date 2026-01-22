@@ -180,6 +180,38 @@ button {
   color: var(--dark-grey);
 }
 
+/* Styles for category listing cards */
+.categories {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  gap: 1em;
+  margin: 2em 0;
+}
+
+.categories a {
+  text-align: center;
+  flex: 1 1 200px;
+  max-width: 250px;
+  box-shadow: 1px 1px 4px var(--light-grey);
+  padding: 1em;
+  text-decoration: none;
+  color: var(--dark-grey);
+}
+
+.categories img {
+  max-width: 150px;
+  height: auto;
+}
+
+.categories p {
+  margin-top: 0.5em;
+  font-weight: bold;
+  font-size: var(--large-font);
+}
+
+/* End category listing card styles */
+
 /* Styles for product lists */
 .product-card {
   flex: 1 1 45%;
